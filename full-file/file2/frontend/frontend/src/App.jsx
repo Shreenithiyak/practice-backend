@@ -2,24 +2,23 @@ import { useState } from 'react'
 import axios from 'axios'
 const App = () => {
 
-const [data,setdata]=useState({username:"",age:"",email:"",password:""})
+const [data,setdata]=useState({name:"",age:"",email:"",password:""})
 
 
 const handlechange=(e)=>{
-  setdata({...data,[e.target.name]:e.taget.value})
+  setdata({...data,[e.target.name]:e.target.value})
 }
 
  const handlesubmit=async(e)=>{
    e.preventDefault()
 
    try {
-    const insert = await axios.post("http://localhost:3000/api/insert",data)
+    const insert = await axios.post("http://localhost:5000/api/user/sentdata",data)
     console.log(insert)
-    // alert(insert.data.msg)
-    // alert(insert.data.checkout.msg)
-    setdata({username:"",age:"",email:"",password:""})
+    alert(insert.data.msg)
+    setdata({name:"",age:"",email:"",password:""})
    } catch (error) {
-      alert(error.response.data.msg)
+      alert(error.response?.data?.msg || "Error occurred")
     
    }
 
@@ -30,9 +29,9 @@ const handlechange=(e)=>{
     <>
   <form onSubmit={handlesubmit}>
     <input type='text'  name= "name" value={data.name} placeholder='Enter ur name' onChange={handlechange}/>
-    <input type='number'  name= "age"value={data.age} placeholder='Enter ur age' onChange={handlechange}/>
-    <input type='email'  name= "email"value={data.email} placeholder='Enter ur email' onChange={handlechange}/>
-    <input type='number' name='password'  value={data.password} placeholder='Enter your password' onChange={handlechange}/>  
+    <input type='number'  name= "age" value={data.age} placeholder='Enter ur age' onChange={handlechange}/>
+    <input type='email'  name= "email" value={data.email} placeholder='Enter ur email' onChange={handlechange}/>
+    <input type='password' name= "password" value={data.password} placeholder='Enter ur password' onChange={handlechange}/>  
     <input type="submit" value={"Register"}/>
 
 

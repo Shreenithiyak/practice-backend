@@ -3,9 +3,6 @@ import bcrypt from 'bcrypt'
 export const data = async(req,res)=>{
    console.log(req)
  res.status(200).json({msg:"received",data:req.body})
-
-
-
 }
 
 
@@ -13,13 +10,24 @@ export const sentdata = async(req,res)=>{
    //  console.log(req)
    try{
 
-  const {username,age,email,password}=req.body
+  const {name,age,email,password}=req.body
+   
+  if(!name || !age||!email || !password){
+    return res.status(400).json({msg:"All fields are required"})
+  }
+  
+  const existingUser = await appmodel.findOne({email})
+  if(existingUser){
+    return res.status(400).json({msg:"Email already exists"})
+  }
+  
+  console.log("Received data:", req.body)
   const hash=await bcrypt.hash(password,10)
-  const checkout =await appmodel.create({username,age,email,password:hash})
-  res.status(200).json({msg:"sucess",data:checkout})
+  const checkout =await appmodel.create({name,age,email,password:hash})
+  res.status(201).json({msg:"User created successfully",data:checkout})
    }catch(e){
- console.log("error",e)
-   res.status(500).json({msg:"failed",error:e})
+   console.log("error",e)
+   res.status(500).json({msg:"Failed to create user",error:e.message})
    }
 }
 

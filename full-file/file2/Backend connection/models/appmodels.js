@@ -1,36 +1,34 @@
 import mongoose from 'mongoose'
 const appdemo = new mongoose.Schema({
-    username:{
-        type:"String",
+    name:{
+        type:String,
+        required:true
+    },
+    email:{
+        type:String,
         required:true,
         unique:true
     },
     age:{
-        type:"Number",
-        required:true,
-        unique:true
-    },
-    email:{
-        type:"String",
-        required:true,
-        unique:true
+        type:Number,
+        required:true
     },
     password:{
-        type:"String",
-        required:true,
-        unique:true
+        type:String,
+        required:true
     },
     createdAT:{
-        type:"String",
+        type:String,
         default:"user"
     },
     updatedAT:{
-        type:"String",
+        type:String,
         default:"user"
     }
-},{timestramps:true})
+},{timestamps:true})
 
 const Admin= mongoose.model("Admin",appdemo)
+
 export default Admin
 
 
