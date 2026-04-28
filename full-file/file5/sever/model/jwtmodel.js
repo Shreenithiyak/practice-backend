@@ -7,6 +7,6 @@ const jSchema = new mongoose.Schema({
 },{timestamps:true})
 
 
-const authModle = mongoose.model("jwtdatas",jSchema)
+const authModle = mongoose.model("populates",jSchema)
 
 export default authModle
